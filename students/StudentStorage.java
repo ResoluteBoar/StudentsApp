@@ -14,7 +14,8 @@ public class StudentStorage {
 
     public Long createStudent(Student student){
         try{
-            Long nextId = getNextiId();
+            Long nextId = getNextId();
+            student.setId(nextId);
             studentStorageMap.put(nextId,student);
             studentSurnameStorage.studentCreated(nextId, student.getSurname());
             return nextId;
@@ -23,7 +24,6 @@ public class StudentStorage {
             System.out.println("Введённые данные некорректны");
             return null;
         }
-
     }
     public boolean updateStudent(Long id, Student student) {
         if (!studentStorageMap.containsKey(id)){
@@ -36,7 +36,7 @@ public class StudentStorage {
             return true;
         }
     }
-    public Long getNextiId(){
+    public Long getNextId(){
         currentId = currentId +1;
         return currentId;
     }
@@ -88,9 +88,6 @@ public class StudentStorage {
                 Student student = studentStorageMap.get(studentId);
                 System.out.println(studentId);
             }
-        } else {
-           
         }
     }
-
 }

@@ -7,7 +7,7 @@ public class StudentsCommandHandler {
     private StudentStorage studentStorage = new StudentStorage();
     boolean hasError = false;
 
-    public void processCommand(Command command){
+    public void processCommand(Command command) throws Exception {
         Action action = command.getAction();
         switch (action) {
             case CREATE -> {
@@ -43,7 +43,7 @@ public class StudentsCommandHandler {
         }
 
     }
-    private void processCreateCommand(Command command){
+    private void processCreateCommand(Command command) throws Exception {
         String data = command.getData();
         String[] dataArray = data.split(",");
         Student student = new Student();
@@ -56,16 +56,11 @@ public class StudentsCommandHandler {
             studentStorage.createStudent(student);
             studentStorage.printAll();
 
-        } catch (NumberFormatException e) {
-            System.out.println("Введённые данные некорректны");
-            hasError = true;
-        } catch (ArrayIndexOutOfBoundsException e){
-            System.out.println("Некорректная величина массива данных");
-            hasError = true;
+        } catch (ArrayIndexOutOfBoundsException e) {
+            throw new Exception("Неверный размер массива");
         }
-
     }
-    public void processUpdateCommand(Command command){
+    public void processUpdateCommand(Command command) throws Exception {
         String data = command.getData();
         String[] dataArray = data.split(",");
         Student student = new Student();
@@ -81,12 +76,8 @@ public class StudentsCommandHandler {
 
             studentStorage.updateStudent(id, student);
             studentStorage.printAll();
-        } catch (NumberFormatException e) {
-            System.out.println("Введённые данные некорректны");
-            hasError = true;
         } catch (ArrayIndexOutOfBoundsException e){
-            System.out.println("Некорректная величина массива данных");
-            hasError = true;
+            throw new Exception("Неверный размер массива");
         }
 
     }
